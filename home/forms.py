@@ -101,6 +101,12 @@ Table Tennis : Prince George's Park Residences, PGPH 1500 : 1600'''
 squash_options = squash_options.split('\n')
 basketball_options = basketball_options.split('\n')
 tabletennis_options = tabletennis_options.split('\n')
+
+basketball_peer = ((i,i) for i in range(0,10))
+squash_peer = ((i,i) for i in range(0,2))
+tabletennis_peer = ((i,i) for i in range(0,4))
+
+
 a = []
 b = []
 c = []
@@ -119,16 +125,22 @@ class basketball(forms.Form):
 
     date = forms.DateField(label='booking date', widget = forms.SelectDateWidget())
     lt = forms.ChoiceField(choices=basketball_options)
+    peer_reqd = forms.ChoiceField(choices=basketball_peer)
+
 
 class squash(forms.Form):
 
     date = forms.DateField(label='booking date', widget = forms.SelectDateWidget())
     lt = forms.ChoiceField(choices=squash_options)
 
+    peer_reqd = forms.ChoiceField(choices=squash_peer)
+
 class tabletennis(forms.Form):
 
     date = forms.DateField(label='booking date', widget = forms.SelectDateWidget())
     lt = forms.ChoiceField(choices=tabletennis_options)
+    peer_reqd = forms.ChoiceField(choices=tabletennis_peer)
+
 
 
 

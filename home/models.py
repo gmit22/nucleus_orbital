@@ -15,6 +15,8 @@ class Booking(models.Model):
     dt = models.DateField('date', default=datetime.date.today, unique=True)
     lt = models.TextField()
     st = models.TextField(default='free')
+    peer = models.TextField(default='no')
+
 
     def __str__(self):
         return str(self.dt)
