@@ -93,15 +93,20 @@ def bookSlot(request, sport):
             if form.is_valid():
                 form = form.cleaned_data
                 current = Booking.objects.get(dt=form['date'])
-
+                pr = form['peer_reqd']
+                print(pr)
+                peers = current.peer.split('|')
                 lts = current.lt.split('|')
                 slots = current.st.split('|')
                 i = lts.index(form['lt'])
                 if slots[i] == 'free':
                     slots[i] = ''
-                if username not in slots[i]:
+                    peers[i] = pr
+
+                if username not in slots[i] and peers[i] != 0:
                     slots[i] += username + ','
                 current.st = '|'.join(slots)
+                current.peer = '|'.join(peers)
                 current.save()
 
         if sport=='Table Tennis':
