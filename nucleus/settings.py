@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'home.apps.HomeConfig',
-    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -71,7 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'nucleus.wsgi.application'
-CRISPY_TEMPLATE_PACK="bootstrap4"
+
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
