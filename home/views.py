@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
-from .models import Sport,Booking
+from .models import Sport, Booking
 import datetime
-from .forms import  tabletennis, basketball, squash
+from .forms import tabletennis, basketball, squash
 
 
 def index(request):
@@ -16,19 +16,20 @@ def index(request):
     # slots = ''
     # peer_reqd = ''
     #
-    # for i in range(0,93):
-    #        slots+='free|'
-    #        peer_reqd += 'n|'
+    # for i in range(0, 93):
+    #     slots += 'free|'
+    #     peer_reqd += 'yes|'
     #
     # for i in range(0, 365):
-    #      trial = Booking(dt=datetime.date.today() + datetime.timedelta(days=i), lt=output, st=slots[:-1], peer=peer_reqd[:-1])
-    #      trial.save()
+    #     trial = Booking(dt=datetime.date.today() + datetime.timedelta(days=i), lt=output, st=slots[:-1],
+    #                     peer=peer_reqd[:-1])
+    #     trial.save()
 
     return render(request, 'home/Navbar.html', {"username": username})
 
-    #temp = Sport.objects.all()
-    #sports = []
-
+    # temp = Sport.objects.all()
+    # sports = []
+    #
     # for x in temp:
     #     sport = {}
     #     sport['name'] = x.sport
@@ -61,8 +62,6 @@ def index(request):
 
 
 def sports(request):
-
-
     temp = Sport.objects.all()
     sports = []
 
@@ -77,18 +76,17 @@ def sports(request):
             sport['lt'].append(l[i] + ' - ' + t[i])
         sports.append(sport)
 
-    return render(request, 'home/facilities.html', {'sports':sports})
+    return render(request, 'home/facilities.html', {'sports': sports})
 
 
 def bookSlot(request, sport):
-
     username = None
     if request.user.is_authenticated:
         username = request.user.username
 
     if request.method == 'POST':
 
-        if sport=='Basketball':
+        if sport == 'Basketball':
             form = basketball(request.POST)
             if form.is_valid():
                 form = form.cleaned_data
@@ -101,43 +99,53 @@ def bookSlot(request, sport):
                 i = lts.index(form['lt'])
                 if slots[i] == 'free':
                     slots[i] = ''
-                    peers[i] = pr
-
-                if username not in slots[i] and peers[i] != 0:
+                if username not in slots[i] and peers[i] == 'yes':
                     slots[i] += username + ','
+                    peers[i] = pr
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
 
-        if sport=='Table Tennis':
+        if sport == 'Table Tennis':
             form = tabletennis(request.POST)
             if form.is_valid():
                 form = form.cleaned_data
                 current = Booking.objects.get(dt=form['date'])
+                pr = form['peer_reqd']
+                print(pr)
+                peers = current.peer.split('|')
                 lts = current.lt.split('|')
                 slots = current.st.split('|')
                 i = lts.index(form['lt'])
                 if slots[i] == 'free':
                     slots[i] = ''
-                if username not in slots[i]:
+                if username not in slots[i] and peers[i] == 'yes':
                     slots[i] += username + ','
+                    peers[i] = pr
                 current.st = '|'.join(slots)
+                current.peer = '|'.join(peers)
                 current.save()
 
-        if sport=='Squash':
+        if sport == 'Squash':
             form = squash(request.POST)
             if form.is_valid():
                 form = form.cleaned_data
                 current = Booking.objects.get(dt=form['date'])
+                pr = form['peer_reqd']
+                print(pr)
+                peers = current.peer.split('|')
                 lts = current.lt.split('|')
                 slots = current.st.split('|')
                 i = lts.index(form['lt'])
                 if slots[i] == 'free':
                     slots[i] = ''
-                if username not in slots[i]:
+                if username not in slots[i] and peers[i] == 'yes':
                     slots[i] += username + ','
+                    peers[i] = pr
                 current.st = '|'.join(slots)
+                current.peer = '|'.join(peers)
                 current.save()
+
         return redirect(index)
 
     form = basketball()
