@@ -1,25 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!--    #<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
-<!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
-    <meta charset="UTF-8">
-    {% load static %}
-	<link rel='stylesheet' href="{% static 'main.css' %}">
-    <title>Nucleus</title>
-</head>
-<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <!--    #<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+        <!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+        <meta charset="UTF-8">
+        {% load static %}
+        <link rel='stylesheet' href="{% static 'main.css' %}">
+        <title>Nucleus</title>
+    </head>
+    <body>
     <nav id="menu">
-      <ul>
-        <li class="home"><a href="">Home</a></li>
-        <li class="tutorials"><a href="sports">Facilities</a></li>
-        <li class="about"><a href="#">Cab Bookings</a></li>
-        <li class="news"><a href="#">{{username}}</a></li>
-        <li class="contact"><a href="/auth/login">Log Out</a></li>
-      </ul>
+        <ul>
+            <li class="home"><a href="">Home</a></li>
+            <li class="tutorials"><a href="sports">Facilities</a></li>
+            <li class="about"><a href="#">Cab Bookings</a></li>
+            <li class="news"><a href="#">{{username}}</a></li>
+            <li class="contact"><a href="/auth/login">Log Out</a></li>
+        </ul>
     </nav>
     <div id="clear-header"></div>
-	<h2> Your Bookings</h2>
-	<p> {{upcoming}} </p>
-</body>
-</html>
+    <h2> Your Bookings</h2>
+
+    {% for booking in bookings %}
+    <div class="book">
+        <ul>
+            <li><span>{{ booking}}</span></li>
+        </ul>
+    </div>
+    {%endfor%}
+
+
+    <p> {{upcoming}} </p>
+    </body>
+    </html>
