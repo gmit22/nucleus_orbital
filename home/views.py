@@ -171,8 +171,11 @@ def bookSlot(request, sport):
                 current.peer = '|'.join(peers)
                 current.save()
 
+        # to get all the valid upcoming bookings
+
+        temp1 = BookingManager.objects.get(userid=username)
         output = []
-        bookings = temp.upcoming_bookings.split('|')[:-1]
+        bookings = temp1.upcoming_bookings.split('|')[:-1]
         for booking in bookings:
             booking_date = booking[0:10]
             print(booking_date)
