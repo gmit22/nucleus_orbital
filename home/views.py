@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
+
+from accounts.models import BookingManager
 from .models import Sport, Booking
 import datetime
 from .forms import tabletennis, basketball, squash
@@ -84,11 +86,14 @@ def bookSlot(request, sport):
     if request.user.is_authenticated:
         username = request.user.username
 
+    temp = BookingManager.objects.get(userid=username)
+
     if request.method == 'POST':
 
         if sport == 'Basketball':
             form = basketball(request.POST)
             if form.is_valid():
+
                 form = form.cleaned_data
                 current = Booking.objects.get(dt=form['date'])
                 pr = form['peer_reqd']
@@ -102,6 +107,8 @@ def bookSlot(request, sport):
                 if username not in slots[i] and peers[i] == 'yes':
                     slots[i] += username + ','
                     peers[i] = pr
+                    temp.upcoming_bookings += form['lt'] + '|'
+                    temp.save()
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
