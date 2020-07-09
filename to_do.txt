@@ -1,9 +1,10 @@
 To Do
 
 1) Dynamically update the choicefield to only show bookings which have peer_wanted as yes
-2) Create two text fields to show past and upcoming bookings of all the users
+
 3) figure out the login and register part of it
 
 
 
 1) For now, booking accepting option for selectively adding peers has been done
+2) Create two text fields to show past and upcoming bookings of all the users

@@ -93,7 +93,6 @@ def bookSlot(request, sport):
         if sport == 'Basketball':
             form = basketball(request.POST)
             if form.is_valid():
-
                 form = form.cleaned_data
                 current = Booking.objects.get(dt=form['date'])
                 pr = form['peer_reqd']
@@ -107,7 +106,8 @@ def bookSlot(request, sport):
                 if username not in slots[i] and peers[i] == 'yes':
                     slots[i] += username + ','
                     peers[i] = pr
-                    temp.upcoming_bookings += form['lt'] + '|'
+                    print(form['date'])
+                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
@@ -129,6 +129,8 @@ def bookSlot(request, sport):
                 if username not in slots[i] and peers[i] == 'yes':
                     slots[i] += username + ','
                     peers[i] = pr
+                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
+                    temp.save()
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
@@ -149,6 +151,8 @@ def bookSlot(request, sport):
                 if username not in slots[i] and peers[i] == 'yes':
                     slots[i] += username + ','
                     peers[i] = pr
+                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
+                    temp.save()
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
