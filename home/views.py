@@ -10,6 +10,7 @@ from .forms import tabletennis, basketball, squash
 
 
 def index(request):
+
     username = None
     if request.user.is_authenticated:
         username = request.user.username
@@ -169,8 +170,19 @@ def bookSlot(request, sport):
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
-        a = temp.userid
-        render(request, 'home/Navbar.html', {"username": username, "a": a})
+
+        output = []
+        bookings = temp.upcoming_bookings.split('|')[:-1]
+        for booking in bookings:
+            booking_date = booking[0:10]
+            print(booking_date)
+            date = datetime.strptime(booking_date, "%Y-%m-%d")
+            now = datetime.now()
+            if date > now:
+                print("yes")
+                output.append(booking)
+
+        return render(request, 'home/Navbar.html', {"username": username, "bookings": output})
 
     form = basketball()
 
