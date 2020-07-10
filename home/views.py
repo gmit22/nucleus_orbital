@@ -115,14 +115,20 @@ def bookSlot(request, sport):
                 lts = current.lt.split('|')
                 slots = current.st.split('|')
                 i = lts.index(form['lt'])
+
                 if slots[i] == 'free':
                     slots[i] = ''
-                if username not in slots[i] and peers[i] == 'yes':
+
+                if peers[i] == 'no':
+                    return render(request, 'home/nobooking.html')
+
+                if username not in slots[i]:
                     slots[i] += username + ','
                     peers[i] = pr
                     print(form['date'])
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
+
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
@@ -138,13 +144,19 @@ def bookSlot(request, sport):
                 lts = current.lt.split('|')
                 slots = current.st.split('|')
                 i = lts.index(form['lt'])
+
                 if slots[i] == 'free':
                     slots[i] = ''
-                if username not in slots[i] and peers[i] == 'yes':
+
+                if peers[i] == 'no':
+                    return render(request, 'home/nobooking.html')
+
+                if username not in slots[i]:
                     slots[i] += username + ','
                     peers[i] = pr
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
+
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
@@ -160,13 +172,19 @@ def bookSlot(request, sport):
                 lts = current.lt.split('|')
                 slots = current.st.split('|')
                 i = lts.index(form['lt'])
+
                 if slots[i] == 'free':
                     slots[i] = ''
-                if username not in slots[i] and peers[i] == 'yes':
+
+                if peers[i] == 'no':
+                    return render(request, 'home/nobooking.html')
+
+                if username not in slots[i]:
                     slots[i] += username + ','
                     peers[i] = pr
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
+
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
