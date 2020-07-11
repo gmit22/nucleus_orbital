@@ -9,7 +9,7 @@
 
 <body>
     {% block content %}
-    <form method="POST" class=“booking_form”>
+    <form action="{% url 'index' %}"  method="POST" class=“booking_form”>
         {% csrf_token %}
         {{ form }}
 
