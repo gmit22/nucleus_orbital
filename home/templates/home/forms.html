@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <title>Forms</title>
     {% load static %}
-	<link rel='stylesheet' href="{% static 'main.css' %}">
+    <link rel='stylesheet' href="{% static 'main.css' %}">
 </head>
 
 <body>
-    {% block content %}
-    <form method="POST" class=“booking_form”>
-        {% csrf_token %}
-        {{ form }}
+{% block content %}
+<form method="POST" class=“booking_form”>
+    {% csrf_token %}
+    {{ form }}
 
-        <button type="submit">Book Slot</button>
-    </form>
-    {% endblock %}
+
+    <button type="submit" onclick="http://127.0.0.1:8000/">Book Slot</button>
+</form>
+{% endblock %}
 
 </body>
 </html>
