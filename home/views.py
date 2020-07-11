@@ -181,6 +181,7 @@ def bookSlot(request, sport):
                 current = Booking.objects.get(dt=form['date'])
                 pr = form['peer_reqd']
                 print(pr)
+                print('squash is working')
                 peers = current.peer.split('|')
                 lts = current.lt.split('|')
                 slots = current.st.split('|')
