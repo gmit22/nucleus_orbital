@@ -35,6 +35,7 @@ def index(request):
 
     for booking in bookings:
 
+        booking_dict = {}
         booking_date = booking[0:10]
         # print(booking_date)
         date = datetime.strptime(booking_date, "%Y-%m-%d")
@@ -42,14 +43,16 @@ def index(request):
 
         if date > now:
 
-            output.append(booking)
+            #create a dictionary to be used in HTML file
+            booking_dict['name'] = booking
+
             booking_objects = Booking.objects.get(dt=date.date())
             bi = booking_objects.lt.split('|')
             booking_index = bi.index(booking[11:])
+            sts = booking_objects.st.split('|')[:-1][booking_index].split(',')[:-1]
+            booking_dict['users'] = ["users booked:"] + sts
 
-
-
-
+            output.append(booking_dict)
 
     return render(request, 'home/Navbar.html', {"username": username, "bookings":output})
 

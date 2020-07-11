@@ -22,9 +22,18 @@
     <h2> Your Bookings</h2>
 
     {% for booking in bookings %}
+
     <div class="book">
         <ul>
-            <li><span>{{ booking}}</span></li>
+
+            <li><span>{{ booking.name}}</span></li>
+
+            <div class="Users">
+            {% for user in booking.users %}
+                {{user}}
+            {%endfor%}
+            </div>
+
         </ul>
     </div>
     {%endfor%}
