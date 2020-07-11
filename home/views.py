@@ -29,7 +29,7 @@ def index(request):
     #                     peer=peer_reqd[:-1])
     #     trial.save()
 
-    output = []
+    booking_output = []
     temp = BookingManager.objects.get(userid=username)
     bookings = temp.upcoming_bookings.split('|')[:-1]
 
@@ -52,9 +52,9 @@ def index(request):
             sts = booking_objects.st.split('|')[:-1][booking_index].split(',')[:-1]
             booking_dict['users'] = ["users booked:"] + sts
 
-            output.append(booking_dict)
+            booking_output.append(booking_dict)
 
-    return render(request, 'home/Navbar.html', {"username": username, "bookings":output})
+    return render(request, 'home/Navbar.html', {"username": username, "bookings":booking_output})
 
     # temp = Sport.objects.all()
     # sports = []
@@ -204,19 +204,31 @@ def bookSlot(request, sport):
 
         # to get all the valid upcoming bookings
 
+        booking_output = []
         temp1 = BookingManager.objects.get(userid=username)
-        output = []
         bookings = temp1.upcoming_bookings.split('|')[:-1]
+
         for booking in bookings:
+
+            booking_dict = {}
             booking_date = booking[0:10]
-            print(booking_date)
+            # print(booking_date)
             date = datetime.strptime(booking_date, "%Y-%m-%d")
             now = datetime.now()
-            if date > now:
-                print("yes")
-                output.append(booking)
 
-        return render(request, 'home/Navbar.html', {"username": username, "bookings": output})
+            if date > now:
+                # create a dictionary to be used in HTML file
+                booking_dict['name'] = booking
+
+                booking_objects = Booking.objects.get(dt=date.date())
+                bi = booking_objects.lt.split('|')
+                booking_index = bi.index(booking[11:])
+                sts = booking_objects.st.split('|')[:-1][booking_index].split(',')[:-1]
+                booking_dict['users'] = ["users booked:"] + sts
+
+                booking_output.append(booking_dict)
+
+        return render(request, 'home/Navbar.html', {"username": username, "bookings": booking_output})
 
     form = basketball()
 

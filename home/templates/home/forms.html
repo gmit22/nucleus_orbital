@@ -12,6 +12,7 @@
     <form method="POST" class=“booking_form”>
         {% csrf_token %}
         {{ form }}
+
         <button type="submit">Book Slot</button>
     </form>
     {% endblock %}
