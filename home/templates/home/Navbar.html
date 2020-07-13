@@ -1,44 +1,81 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <!--    #<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
-        <!--    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
-        <meta charset="UTF-8">
-        {% load static %}
-        <link rel='stylesheet' href="{% static 'main.css' %}">
-        <title>Nucleus</title>
-    </head>
-    <body>
-    <nav id="menu">
-        <ul>
-            <li class="home"><a href="">Home</a></li>
-            <li class="tutorials"><a href="sports">Facilities</a></li>
-            <li class="about"><a href="#">Cab Bookings</a></li>
-            <li class="news"><a href="#">{{username}}</a></li>
-            <li class="contact"><a href="/auth/login/">Log Out</a></li>
-        </ul>
-    </nav>
-    <div id="clear-header"></div>
-    <h2> Your Bookings</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'main.css' %}">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--JQuery for bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'main.css' %}">
+    <title>Nucleus</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
+
+    <a class="navbar-brand" href="">nucleus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="sports">Facilities</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="">Cab Bookings</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{username}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="/auth/login/">Logout</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container-fluid">
+    <h2> Your Bookings</h2>
     {% for booking in bookings %}
 
-    <div class="book">
+    <div>
         <ul>
 
             <li><span>{{ booking.name}}</span></li>
 
             <div class="Users">
-            {% for user in booking.users %}
+                {% for user in booking.users %}
                 {{user}}
-            {%endfor%}
+                {%endfor%}
             </div>
 
         </ul>
     </div>
     {%endfor%}
+</div>
 
 
-    <p> {{upcoming}} </p>
-    </body>
-    </html>
+</body>
+</html>
