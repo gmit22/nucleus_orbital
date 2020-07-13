@@ -21,7 +21,7 @@ def register(request):
             bm.save()
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return render(request, 'accounts/register.html', {'form': form, 'absoluteurl': '/auth/login/'})
+            return render(request, 'accounts/successfulregistration.html', {'username':username})
     else:
         form = UserCreationForm()
     return render(request, 'accounts/register.html', {'form': form, 'absoluteurl': '/auth/login/'})
