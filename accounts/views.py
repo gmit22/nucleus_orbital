@@ -1,6 +1,7 @@
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+#from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from .forms import UserCreationForm
 
 from accounts.models import BookingManager
 
@@ -15,6 +16,7 @@ def register(request):
         if form.is_valid():
 
             form.save()
+
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             bm = BookingManager(userid=username, upcoming_bookings="", past_bookings="")
