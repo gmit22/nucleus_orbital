@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
-
-
 from accounts.models import BookingManager
 from .models import Sport, Booking
 import datetime
 from .forms import tabletennis, basketball, squash
+
+from apiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+import pickle
+import os.path
 
 def past_bookings(request):
     username = None
@@ -149,6 +153,27 @@ def bookSlot(request, sport):
     temp = BookingManager.objects.get(userid=username)
     past_booking = past_bookings(request)
 
+
+    SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+    creds = None
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+    service = build("calendar", "v3", credentials=creds)
+    result = service.calendarList().list().execute()
+    calendar_id = request.user.email
+
     if request.method == 'POST':
 
         if sport == 'Basketball':
@@ -175,6 +200,34 @@ def bookSlot(request, sport):
                     print(form['date'])
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
+
+                dt = form['date'].split('-')
+                ind = lts[i].index(':')
+                ind = ind - 5
+                c1 = lts[i][ind]
+                c2 = lts[i][ind + 1]
+                c = c1 + c2
+                if c1 == 0:
+                    c = c2
+                start_time = datetime.datetime(dt[0], dt[1], dt[2], c, 0, 0)
+                end_time = start_time + datetime.timedelta(hours=1)
+                event = {
+                    'summary': 'Basketball',
+                    'location': lts[i],
+                    'description': '',
+                    'start': {
+                        'dateTime': start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'end': {
+                        'dateTime': end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'reminders': {
+                        'useDefault': True,
+                    },
+                }
+                service.events().insert(calendarId=calendar_id, body=event).execute()
 
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
@@ -204,6 +257,36 @@ def bookSlot(request, sport):
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
 
+                dt = form['date'].split('-')
+                ind = lts[i].index(':')
+                ind = ind - 5
+                c1 = lts[i][ind]
+                c2 = lts[i][ind + 1]
+                c = c1 + c2
+                if c1 == 0:
+                    c = c2
+                start_time = datetime.datetime(dt[0], dt[1], dt[2], c, 0, 0)
+                end_time = start_time + datetime.timedelta(hours=1)
+                event = {
+                    'summary': 'Table tennis',
+                    'location': lts[i],
+                    'description': '',
+                    'start': {
+                        'dateTime': start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'end': {
+                        'dateTime': end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'reminders': {
+                        'useDefault': True,
+                    },
+                }
+                service.events().insert(calendarId=calendar_id, body=event).execute()
+
+
+
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
                 current.save()
@@ -231,6 +314,37 @@ def bookSlot(request, sport):
                     peers[i] = pr
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
+
+
+                dt = form['date'].strftime("%Y-%m-%dT")
+                ind = lts[i].index(':')
+                ind = ind - 5
+                c1 = lts[i][ind]
+                c2 = lts[i][ind + 1]
+                c = c1 + c2
+                if c1 == 0:
+                    c = c2
+
+                st = datetime.time(int(c, 10), 0, 0).strftime("%H:%M:%S")
+                ste = datetime.time(int(c, 10)+1, 0, 0).strftime("%H:%M:%S")
+                event = {
+                    'summary': 'Squash',
+                    'location': lts[i],
+                    'description': '',
+                    'start': {
+                        'dateTime': dt+st,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'end': {
+                        'dateTime': dt+ste,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'reminders': {
+                        'useDefault': True,
+                    },
+                }
+                service.events().insert(calendarId=calendar_id, body=event).execute()
+
 
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
