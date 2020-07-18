@@ -201,7 +201,7 @@ def bookSlot(request, sport):
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
 
-                dt = form['date'].split('-')
+                dt = form['date'].strftime("%Y-%m-%dT")
                 ind = lts[i].index(':')
                 ind = ind - 5
                 c1 = lts[i][ind]
@@ -209,18 +209,19 @@ def bookSlot(request, sport):
                 c = c1 + c2
                 if c1 == 0:
                     c = c2
-                start_time = datetime.datetime(dt[0], dt[1], dt[2], c, 0, 0)
-                end_time = start_time + datetime.timedelta(hours=1)
+
+                st = datetime.time(int(c, 10), 0, 0).strftime("%H:%M:%S")
+                ste = datetime.time(int(c, 10) + 1, 0, 0).strftime("%H:%M:%S")
                 event = {
                     'summary': 'Basketball',
                     'location': lts[i],
                     'description': '',
                     'start': {
-                        'dateTime': start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'dateTime': dt + st,
                         'timeZone': 'Asia/Singapore',
                     },
                     'end': {
-                        'dateTime': end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'dateTime': dt + ste,
                         'timeZone': 'Asia/Singapore',
                     },
                     'reminders': {
@@ -257,7 +258,7 @@ def bookSlot(request, sport):
                     temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
                     temp.save()
 
-                dt = form['date'].split('-')
+                dt = form['date'].strftime("%Y-%m-%dT")
                 ind = lts[i].index(':')
                 ind = ind - 5
                 c1 = lts[i][ind]
@@ -265,18 +266,19 @@ def bookSlot(request, sport):
                 c = c1 + c2
                 if c1 == 0:
                     c = c2
-                start_time = datetime.datetime(dt[0], dt[1], dt[2], c, 0, 0)
-                end_time = start_time + datetime.timedelta(hours=1)
+
+                st = datetime.time(int(c, 10), 0, 0).strftime("%H:%M:%S")
+                ste = datetime.time(int(c, 10) + 1, 0, 0).strftime("%H:%M:%S")
                 event = {
-                    'summary': 'Table tennis',
+                    'summary': 'Table Tennis',
                     'location': lts[i],
                     'description': '',
                     'start': {
-                        'dateTime': start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'dateTime': dt + st,
                         'timeZone': 'Asia/Singapore',
                     },
                     'end': {
-                        'dateTime': end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                        'dateTime': dt + ste,
                         'timeZone': 'Asia/Singapore',
                     },
                     'reminders': {
