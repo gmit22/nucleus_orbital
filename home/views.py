@@ -157,18 +157,16 @@ def bookSlot(request, sport):
     SCOPES = ['https://www.googleapis.com/auth/calendar']
 
     creds = None
+
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
             creds = pickle.load(token)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
+    flow = InstalledAppFlow.from_client_secrets_file(
+        'credentials.json', SCOPES)
+    creds = flow.run_local_server(port=0)
+    with open('token.pickle', 'wb') as token:
+        pickle.dump(creds, token)
+
 
     service = build("calendar", "v3", credentials=creds)
     result = service.calendarList().list().execute()
@@ -202,7 +200,7 @@ def bookSlot(request, sport):
                     temp.save()
 
                 dt = form['date'].strftime("%Y-%m-%dT")
-                ind = lts[i].index(':')
+                ind = lts[i].rindex(':')
                 ind = ind - 5
                 c1 = lts[i][ind]
                 c2 = lts[i][ind + 1]
@@ -228,7 +226,7 @@ def bookSlot(request, sport):
                         'useDefault': True,
                     },
                 }
-                service.events().insert(calendarId=calendar_id, body=event).execute()
+                service.events().insert(calendarId='primary', body=event).execute()
 
                 current.st = '|'.join(slots)
                 current.peer = '|'.join(peers)
@@ -259,7 +257,7 @@ def bookSlot(request, sport):
                     temp.save()
 
                 dt = form['date'].strftime("%Y-%m-%dT")
-                ind = lts[i].index(':')
+                ind = lts[i].rindex(':')
                 ind = ind - 5
                 c1 = lts[i][ind]
                 c2 = lts[i][ind + 1]
@@ -285,7 +283,7 @@ def bookSlot(request, sport):
                         'useDefault': True,
                     },
                 }
-                service.events().insert(calendarId=calendar_id, body=event).execute()
+                service.events().insert(calendarId='primary', body=event).execute()
 
 
 
@@ -319,7 +317,7 @@ def bookSlot(request, sport):
 
 
                 dt = form['date'].strftime("%Y-%m-%dT")
-                ind = lts[i].index(':')
+                ind = lts[i].rindex(':')
                 ind = ind - 5
                 c1 = lts[i][ind]
                 c2 = lts[i][ind + 1]
