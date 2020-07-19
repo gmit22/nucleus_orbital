@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-
-
 from accounts.models import BookingManager
 from .models import Sport, Booking
 import datetime
-from .forms import tabletennis, basketball, squash
+from .forms import tabletennis, basketball, squash, remove
 
 def past_bookings(request):
     username = None
@@ -153,88 +151,40 @@ def bookSlot(request, sport):
 
         if sport == 'Basketball':
             form = basketball(request.POST)
-            if form.is_valid():
-                form = form.cleaned_data
-                current = Booking.objects.get(dt=form['date'])
-                pr = form['peer_reqd']
-                print(pr)
-                peers = current.peer.split('|')
-                lts = current.lt.split('|')
-                slots = current.st.split('|')
-                i = lts.index(form['lt'])
 
-                if slots[i] == 'free':
-                    slots[i] = ''
-
-                if peers[i] == 'no':
-                    return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
-
-                if username not in slots[i]:
-                    slots[i] += username + ','
-                    peers[i] = pr
-                    print(form['date'])
-                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
-                    temp.save()
-
-                current.st = '|'.join(slots)
-                current.peer = '|'.join(peers)
-                current.save()
 
         if sport == 'Table Tennis':
             form = tabletennis(request.POST)
-            if form.is_valid():
-                form = form.cleaned_data
-                current = Booking.objects.get(dt=form['date'])
-                pr = form['peer_reqd']
-                print(pr)
-                peers = current.peer.split('|')
-                lts = current.lt.split('|')
-                slots = current.st.split('|')
-                i = lts.index(form['lt'])
-
-                if slots[i] == 'free':
-                    slots[i] = ''
-
-                if peers[i] == 'no':
-                    return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
-
-                if username not in slots[i]:
-                    slots[i] += username + ','
-                    peers[i] = pr
-                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
-                    temp.save()
-
-                current.st = '|'.join(slots)
-                current.peer = '|'.join(peers)
-                current.save()
 
         if sport == 'Squash':
             form = squash(request.POST)
-            if form.is_valid():
-                form = form.cleaned_data
-                current = Booking.objects.get(dt=form['date'])
-                pr = form['peer_reqd']
-                print(pr)
-                peers = current.peer.split('|')
-                lts = current.lt.split('|')
-                slots = current.st.split('|')
-                i = lts.index(form['lt'])
 
-                if slots[i] == 'free':
-                    slots[i] = ''
+        if form.is_valid():
+            form = form.cleaned_data
+            current = Booking.objects.get(dt=form['date'])
+            pr = form['peer_reqd']
+            print(pr)
+            peers = current.peer.split('|')
+            lts = current.lt.split('|')
+            slots = current.st.split('|')
+            i = lts.index(form['lt'])
 
-                if peers[i] == 'no':
-                    return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
+            if slots[i] == 'free':
+                slots[i] = ''
 
-                if username not in slots[i]:
-                    slots[i] += username + ','
-                    peers[i] = pr
-                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
-                    temp.save()
+            if peers[i] == 'no':
+                return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
 
-                current.st = '|'.join(slots)
-                current.peer = '|'.join(peers)
-                current.save()
+            if username not in slots[i]:
+                slots[i] += username + ','
+                peers[i] = pr
+                print(form['date'])
+                temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
+                temp.save()
+
+            current.st = '|'.join(slots)
+            current.peer = '|'.join(peers)
+            current.save()
 
         booking_output = upcoming_booking(request)
 
@@ -252,3 +202,64 @@ def bookSlot(request, sport):
         form = squash()
 
     return render(request, 'home/forms.html', {"form": form})
+
+def removeSlot(request):
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+
+    user_booking = BookingManager.objects.get(userid=username)
+    upcoming_bookings = user_booking.upcoming_bookings.split('|')
+    choice_field = []
+
+    for i in upcoming_bookings:
+        choice_field.append((i, i))
+
+    if request.method == 'POST':
+
+        form = remove(request.POST)
+        form.fields['rm'].choices = choice_field
+
+        if form.is_valid():
+            form = form.cleaned_data
+            input = form['rm']
+            dt = input[0:10]
+
+            current = Booking.objects.get(dt=dt)
+            lt = current.lt.split('|')
+            index = lt.index(input[11:])
+
+            rm_user = current.st.split('|')
+            temp = rm_user[index].split(',')
+            temp.remove(username)
+            if (len(temp) < 1):
+
+                rm_user[index] = 'free'
+
+            else:
+                rm_user[index] = ','.join(temp)
+
+            upcoming_bookings.remove(input)
+            user_booking.upcoming_bookings = '|'.join(upcoming_bookings)
+            user_booking.save()
+
+            current.st = '|'.join(rm_user)
+            current.save()
+
+        return render(request, 'home/bookingremoved.html', {"form": form})
+
+    form = remove(request.POST)
+    form.fields['rm'].choices = choice_field
+
+    return render(request, 'home/removeSlot.html', {"form": form})
+
+
+
+
+
+
+
+
+
+
+

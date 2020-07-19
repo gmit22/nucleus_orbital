@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/', views.index, name='register'),
     path('', views.index, name='index'),
     path('sports/', views.sports, name='sports'),
-    path('forms/<str:sport>', views.bookSlot, name='bookSlot')
+    path('forms/<str:sport>', views.bookSlot, name='bookSlot'),
+    path('remove', views.removeSlot, name='try')
 ]
 

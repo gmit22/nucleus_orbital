@@ -142,6 +142,17 @@ class tabletennis(forms.Form):
     lt = forms.ChoiceField(choices=tabletennis_options)
     peer_reqd = forms.ChoiceField(choices=tabletennis_peer)
 
+class remove(forms.Form):
+
+    rm = forms.ChoiceField(label='bookings', choices=[])
+
+    # def __init__(self, option=None, *args, **kwargs):
+    #     super(remove, self).__init__(*args, **kwargs)
+    #     if option:
+    #         self.fields['rm'].choices = option
+
+
+
 
 
 
