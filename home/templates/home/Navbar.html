@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
     {% load static %}
     <link rel='stylesheet' href="{% static 'main.css' %}">
-    <title>Nucleus</title>
+    <title>Homepage</title>
 </head>
 
 <body>
@@ -46,7 +46,7 @@
                     {{username}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Change Pasword</a>
                     <a class="dropdown-item" href="/auth/login/">Logout</a>
                 </div>
             </li>
@@ -58,11 +58,11 @@
 
 <div class="container-fluid">
     <h2 class="booking"> Your Bookings</h2>
-    <a href="/remove" >Remove Slot</a>
+    <a href="/remove" class="b">Remove Slot</a>
 
-    {% for booking in bookings %}
+    <div class="container-fluid-b">
+        {% for booking in bookings %}
 
-    <div>
         <ul>
 
             <li><span>{{ booking.name}}</span></li>
@@ -74,8 +74,12 @@
             </div>
 
         </ul>
+
+
+        {%endfor%}
     </div>
-    {%endfor%}
+</div>
+
 </div>
 
 

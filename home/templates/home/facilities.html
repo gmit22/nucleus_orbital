@@ -61,26 +61,26 @@
     </div>
 </nav>
 
+<div class="container-fluid">
 
-<body>
-    {% for sport in sports %}
-    <div class="sport">
-        <h1>{{ sport.name }}</h1>
-        <ul>
+{% for sport in sports %}
+<div class="sport">
+    <h1>{{ sport.name }}</h1>
+    <ul>
         {% for timing in sport.lt %}
-            <li><span>{{ timing }}</span></li>
+        <li><span>{{ timing }}</span></li>
         {% endfor %}
-        </ul>
-        <a href="{{sport.url}}">Book Slot</a>
-    </div>
-    {%endfor%}
+    </ul>
+    <a href="{{sport.url}}">Book Slot</a>
+</div>
+{%endfor%}
 
-    {% for entry in Bookings %}
-    <div class="bookings">
-        <h1>entry</h1>
+{% for entry in Bookings %}
+<div class="bookings">
+    <h1>entry</h1>
     {% endfor %}
-    </div>
+</div>
 
-    
+</div>
 </body>
 </html>

@@ -55,16 +55,16 @@
     </div>
 </nav>
 
-
+<div class="container-fluid">
 {% block content %}
 <form method="POST" class=“booking_remove”>
     {% csrf_token %}
     {{ form }}
 
-    <button type="submit" onclick="http://127.0.0.1:8000/">Remove Slot</button>
+    <button class="btn" id="but" type="submit" onclick="http://127.0.0.1:8000/">Remove Slot</button>
 </form>
 {% endblock %}
-
+</div>
 
 </body>
 </html>

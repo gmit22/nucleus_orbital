@@ -129,6 +129,8 @@ def index(request):
     #         output += array
 
 def sports(request):
+    if request.user.is_authenticated:
+        username = request.user.username
     temp = Sport.objects.all()
     sports = []
 
@@ -143,7 +145,7 @@ def sports(request):
             sport['lt'].append(l[i] + ' - ' + t[i])
         sports.append(sport)
 
-    return render(request, 'home/facilities.html', {'sports': sports})
+    return render(request, 'home/facilities.html', {'sports': sports, "username": username })
 
 def bookSlot(request, sport):
     username = None
@@ -376,7 +378,7 @@ def bookSlot(request, sport):
     if sport == 'Squash':
         form = squash()
 
-    return render(request, 'home/forms.html', {"form": form})
+    return render(request, 'home/forms.html', {"form": form, 'sport':sport, "username": username})
 
 def removeSlot(request):
     username = None

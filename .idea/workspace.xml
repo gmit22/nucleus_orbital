@@ -20,12 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4eaa2c7a-dfa9-4fa6-a7d2-88ded31b8a97" name="Default Changelist" comment="GC working v2">
+      <change afterPath="$PROJECT_DIR$/home/favicon.ico" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/home/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/home/static/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/home/templates/home/Navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/Navbar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/bookingremoved.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/bookingremoved.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/facilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/facilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/forms.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/forms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/removeSlot.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/removeSlot.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/token.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/token.pickle" afterDir="false" />
     </list>
@@ -58,10 +61,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/home/templates" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Desktop\nucleus_orbital\home\templates" />
+      <recent name="C:\Desktop\nucleus_orbital\home\templates\home" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Desktop\nucleus_orbital\home\templates\home" />
     </key>

@@ -1,5 +1,7 @@
 body{
      font-family: 'Montserrat-Black', sans-serif;
+     background-color: black;
+     color:white;
 }
 
 h2{
@@ -7,17 +9,26 @@ h2{
     line-height: 1.25;
     font-weight: bold;
     font-size: 2rem;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .booking{
-    font-size:10rem;
+    font-size: 2rem;
+    margin-bottom:10px;
+}
+
+.b{
+    margin-bottom:2000px;
 }
 
 .container-fluid{
     padding: 2% 5% 3% 5%;
     background-color:black;
     color:white;
+}
+
+.container-fluid-b{
+    padding: 2% 1% 2% 1%;
 }
 
 
@@ -40,4 +51,11 @@ h2{
 
 .nav-item{
     padding:0 10px;
+}
+
+#but{
+    color:#3282b8;
+}
+a:visited{
+    color:#3282b8;
 }
