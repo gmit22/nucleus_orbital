@@ -3,6 +3,8 @@ from accounts.models import BookingManager
 from .models import Sport, Booking
 import datetime
 from .forms import tabletennis, basketball, squash, remove
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 from apiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -146,6 +148,8 @@ def sports(request):
         sports.append(sport)
 
     return render(request, 'home/facilities.html', {'sports': sports, "username": username })
+
+
 
 def bookSlot(request, sport):
     username = None
