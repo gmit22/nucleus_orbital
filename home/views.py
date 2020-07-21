@@ -4,6 +4,12 @@ from .models import Sport, Booking
 import datetime
 from .forms import tabletennis, basketball, squash, remove
 
+from apiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+import pickle
+import os.path
+
 def past_bookings(request):
     username = None
     if request.user.is_authenticated:
@@ -147,44 +153,213 @@ def bookSlot(request, sport):
     temp = BookingManager.objects.get(userid=username)
     past_booking = past_bookings(request)
 
+
+    #if os.path.exists('token.pickle'):
+    #    with open('token.pickle', 'rb') as token:
+    #        creds = pickle.load(token)
+    #if not creds or not creds.valid:
+    #    if creds and creds.expired and creds.refresh_token:
+    #        creds.refresh(Request())
+    #    else:
+    #        flow = InstalledAppFlow.from_client_secrets_file(
+    #            'credentials.json', SCOPES)
+    #        creds = flow.run_local_server(port=0)
+    #    with open('token.pickle', 'wb') as token:
+    #        pickle.dump(creds, token)
+
+
+
     if request.method == 'POST':
+
+        SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+        creds = None
+
+        if os.path.exists('token.pickle'):
+            with open('token.pickle', 'rb') as token:
+                creds = pickle.load(token)
+        flow = InstalledAppFlow.from_client_secrets_file(
+            'credentials.json', SCOPES)
+        creds = flow.run_local_server(port=0)
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+
+        service = build("calendar", "v3", credentials=creds)
+        result = service.calendarList().list().execute()
+        calendar_id = request.user.email
 
         if sport == 'Basketball':
             form = basketball(request.POST)
+            if form.is_valid():
+                form = form.cleaned_data
+                current = Booking.objects.get(dt=form['date'])
+                pr = form['peer_reqd']
+                print(pr)
+                peers = current.peer.split('|')
+                lts = current.lt.split('|')
+                slots = current.st.split('|')
+                i = lts.index(form['lt'])
 
+                if slots[i] == 'free':
+                    slots[i] = ''
+
+                if peers[i] == 'no':
+                    return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
+
+                if username not in slots[i]:
+                    slots[i] += username + ','
+                    peers[i] = pr
+                    print(form['date'])
+                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
+                    temp.save()
+
+                dt = form['date'].strftime("%Y-%m-%dT")
+                ind = lts[i].rindex(':')
+                ind = ind - 5
+                c1 = lts[i][ind]
+                c2 = lts[i][ind + 1]
+                c = c1 + c2
+                if c1 == 0:
+                    c = c2
+
+                st = datetime.time(int(c, 10), 0, 0).strftime("%H:%M:%S")
+                ste = datetime.time(int(c, 10) + 1, 0, 0).strftime("%H:%M:%S")
+                event = {
+                    'summary': 'Basketball',
+                    'location': lts[i],
+                    'description': '',
+                    'start': {
+                        'dateTime': dt + st,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'end': {
+                        'dateTime': dt + ste,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'reminders': {
+                        'useDefault': True,
+                    },
+                }
+                service.events().insert(calendarId='primary', body=event).execute()
+
+                current.st = '|'.join(slots)
+                current.peer = '|'.join(peers)
+                current.save()
 
         if sport == 'Table Tennis':
             form = tabletennis(request.POST)
+            if form.is_valid():
+                form = form.cleaned_data
+                current = Booking.objects.get(dt=form['date'])
+                pr = form['peer_reqd']
+                print(pr)
+                peers = current.peer.split('|')
+                lts = current.lt.split('|')
+                slots = current.st.split('|')
+                i = lts.index(form['lt'])
+
+                if slots[i] == 'free':
+                    slots[i] = ''
+
+                if peers[i] == 'no':
+                    return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
+
+                if username not in slots[i]:
+                    slots[i] += username + ','
+                    peers[i] = pr
+                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
+                    temp.save()
+
+                dt = form['date'].strftime("%Y-%m-%dT")
+                ind = lts[i].rindex(':')
+                ind = ind - 5
+                c1 = lts[i][ind]
+                c2 = lts[i][ind + 1]
+                c = c1 + c2
+                if c1 == 0:
+                    c = c2
+
+                st = datetime.time(int(c, 10), 0, 0).strftime("%H:%M:%S")
+                ste = datetime.time(int(c, 10) + 1, 0, 0).strftime("%H:%M:%S")
+                event = {
+                    'summary': 'Table Tennis',
+                    'location': lts[i],
+                    'description': '',
+                    'start': {
+                        'dateTime': dt + st,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'end': {
+                        'dateTime': dt + ste,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'reminders': {
+                        'useDefault': True,
+                    },
+                }
+                service.events().insert(calendarId='primary', body=event).execute()
+
+
+
+                current.st = '|'.join(slots)
+                current.peer = '|'.join(peers)
+                current.save()
 
         if sport == 'Squash':
             form = squash(request.POST)
+            if form.is_valid():
+                form = form.cleaned_data
+                current = Booking.objects.get(dt=form['date'])
+                pr = form['peer_reqd']
+                print(pr)
+                peers = current.peer.split('|')
+                lts = current.lt.split('|')
+                slots = current.st.split('|')
+                i = lts.index(form['lt'])
 
-        if form.is_valid():
-            form = form.cleaned_data
-            current = Booking.objects.get(dt=form['date'])
-            pr = form['peer_reqd']
-            print(pr)
-            peers = current.peer.split('|')
-            lts = current.lt.split('|')
-            slots = current.st.split('|')
-            i = lts.index(form['lt'])
+                if slots[i] == 'free':
+                    slots[i] = ''
 
-            if slots[i] == 'free':
-                slots[i] = ''
+                if peers[i] == 'no':
+                    return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
 
-            if peers[i] == 'no':
-                return render(request, 'home/nobooking.html', {"past_bookings": past_booking})
+                if username not in slots[i]:
+                    slots[i] += username + ','
+                    peers[i] = pr
+                    temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
+                    temp.save()
 
-            if username not in slots[i]:
-                slots[i] += username + ','
-                peers[i] = pr
-                print(form['date'])
-                temp.upcoming_bookings += str(form['date']) + ';' + form['lt'] + '|'
-                temp.save()
+                dt = form['date'].strftime("%Y-%m-%dT")
+                ind = lts[i].rindex(':')
+                ind = ind - 5
+                c1 = lts[i][ind]
+                c2 = lts[i][ind + 1]
+                c = c1 + c2
+                if c1 == 0:
+                    c = c2
 
-            current.st = '|'.join(slots)
-            current.peer = '|'.join(peers)
-            current.save()
+                st = datetime.time(int(c, 10), 0, 0).strftime("%H:%M:%S")
+                ste = datetime.time(int(c, 10)+1, 0, 0).strftime("%H:%M:%S")
+                event = {
+                    'summary': 'Squash',
+                    'location': lts[i],
+                    'description': '',
+                    'start': {
+                        'dateTime': dt+st,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'end': {
+                        'dateTime': dt+ste,
+                        'timeZone': 'Asia/Singapore',
+                    },
+                    'reminders': {
+                        'useDefault': True,
+                    },
+                }
+                service.events().insert(calendarId=calendar_id, body=event).execute()
+                current.st = '|'.join(slots)
+                current.peer = '|'.join(peers)
+                current.save()
 
         booking_output = upcoming_booking(request)
 
