@@ -19,7 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4eaa2c7a-dfa9-4fa6-a7d2-88ded31b8a97" name="Default Changelist" comment="GC working v2" />
+    <list default="true" id="4eaa2c7a-dfa9-4fa6-a7d2-88ded31b8a97" name="Default Changelist" comment="GC working v2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/Navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/Navbar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/facilities.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/facilities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/templates/home/forms.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/forms.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/token.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/token.pickle" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,8 +56,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/home/templates" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -131,10 +138,10 @@
       <screen x="0" y="23" width="1440" height="822" />
     </state>
     <state x="144" y="90" key="MergeDialog/0.23.1440.822@0.23.1440.822" timestamp="1594966943372" />
-    <state x="221" y="89" key="SettingsEditor" timestamp="1594969474396">
+    <state x="221" y="89" key="SettingsEditor" timestamp="1595421118635">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1594969474396" />
+    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1595421118635" />
     <state x="508" y="351" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594966913363">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
