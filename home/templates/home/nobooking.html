@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'main.css' %}">
 </head>
 
 <body>
@@ -10,7 +12,7 @@
 <h3>Booking slot is not available</h3>
 <a href="http://127.0.0.1:8000/"> Home </a>
 
-<h2> Your Bookings</h2>
+<h2> Past Bookings</h2>
 {% for booking in past_bookings %}
 
 <div>
