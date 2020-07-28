@@ -1,8 +1,6 @@
 # **Milestone 2 - NucleUS**
 
-Proposed Level of Achievement:
-
-Apollo 11
+Proposed Level of Achievement: Apollo 11
 
 Motivation:
 
@@ -34,42 +32,19 @@ To search for a cab booking: Beginning with the form for cab searches, using a k
 Features completed:
 
 1. Basic logging in system for users :
+   Users can login from the authorisation page or register with a new account.
 
-Users can login from the authorisation page or register with a new account.
 
-![](RackMultipart20200728-4-1nu4w75_html_71acb9f036aa1517.png)
+2. Prepare navigation bar and activate buttons to redirect to required pages.        Example, home -> facilities.
 
-![](RackMultipart20200728-4-1nu4w75_html_b8af2ee57557c5ad.png)
+3. Set up the facilities page where the book slot hyperlink takes the user to a      page to accept details of the booking.
 
-1. Prepare navigation bar and activate buttons to redirect to required pages. Example, home -\&gt; facilities.
+4. Accept the booking and add to google calendar after user authentication.
 
-![](RackMultipart20200728-4-1nu4w75_html_da0c5b8c3cbf3638.png)
+5. Remove Slot feature takes the user a page where they choose the slot they want    to remove.
 
-![](RackMultipart20200728-4-1nu4w75_html_a01fe191e99e70d3.png)
+6. Change user password.
 
-1. Set up the facilities page where the book slot hyperlink takes the user to a page to accept details of the booking.
-
-![](RackMultipart20200728-4-1nu4w75_html_333f3caedba4eb39.png)
-
-1. Accept the booking and add to google calendar after user authentication.
-
-![](RackMultipart20200728-4-1nu4w75_html_33a56fd76db1f936.png)
-
-![](RackMultipart20200728-4-1nu4w75_html_db96f9811f16084a.png)
-
-1. Remove Slot feature takes the user a page where they choose the slot they want to remove.
-
-![](RackMultipart20200728-4-1nu4w75_html_f9996bb596c15f60.png)
-
-![](RackMultipart20200728-4-1nu4w75_html_113aa29aa833a902.png)
-
-![](RackMultipart20200728-4-1nu4w75_html_f1907e8fb6fd12d6.png)
-
-1. Change user password.
-
-![](RackMultipart20200728-4-1nu4w75_html_2658624eac8b9d0b.png)
-
-![](RackMultipart20200728-4-1nu4w75_html_239c218d46cfe443.png)
 
 #
 
@@ -102,48 +77,48 @@ Program Flow:
 
 - Login:
 
-- Enter your registered username and password and login.
-- On successfully logging in, the user will be redirected to the default home page.
+    - Enter your registered username and password and login.
+    - On successfully logging in, the user will be redirected to the default home       page.
 
 - Register:
 
-- Click on the &quot;Don&#39;t have an account?&quot; hyperlink.
-- Enter the details. The email must be your Gmail id. The app uses it to add your bookings to google calendar. The password has to pass certain constraints, for example, not being very similar to your username.
-- On successful registration, the user will be redirected to the default home page.
+    - Click on the "Don't have an account?" hyperlink.
+    - Enter the details. The email must be your Gmail id. The app uses it to add         your bookings to google calendar. The password has to pass certain                 constraints, for example, not being very similar to your username.
+    - On successful registration, the user will be redirected to the default home       page.
 
-1. The user can view his/her upcoming bookings in the home page
-2. Book Facility:
+2. The user can view his/her upcoming bookings in the home page
+3. Book Facility:
 
-- Click on the &quot;Facilities&quot; tab.
-- View all the locations and the sub-locations. The user can choose the sport they want and click on the &quot;Book Slot&quot; hyperlink below the location.
-- Fill in the details- Date, Location and Time, Peer requirement.
+    - Click on the "Facilities" tab.
+    - View all the locations and the sub-locations. The user can choose the sport       they want and click on the &quot;Book Slot&quot; hyperlink below the               location.
+    - Fill in the details- Date, Location and Time, Peer requirement.
 
     - Book Slot.
 
-If the slot the user has chosen is unavailable, the user will be redirected to a page which conveys the message of booking unsuccessful.
+        If the slot the user has chosen is unavailable, the user will be                   redirected to a page which conveys the message of booking unsuccessful.
 
-Otherwise, it will redirect you to get Gmail authentication with the same email id as the one given during registration. Once access is provided, the user can close the tab and the webpage will be redirected to a booking confirmation page.
+        Otherwise, it will redirect you to get Gmail authentication with the same         email id as the one given during registration. Once access is provided,           the user can close the tab and the webpage will be redirected to a booking         confirmation page.
 
-    - The booking details will be reflected on the google calendar linked with the specified email id.
-    - Click on the &quot;Home&quot; hyperlink to go back to the home page.
-    - Here, the user can view the users booked under that booking. If another user had previously booked in that slot their username will also me mentioned next to the current user&#39;s username. Even in the other user&#39;s homepage, the username of the new user will be reflected.
+    - The booking details will be reflected on the google calendar linked with the       specified email id.
+    - Click on the "Home" hyperlink to go back to the home page.
+    - Here, the user can view the users booked under that booking. If another user       had previously booked in that slot their username will also me mentioned           next to the current user's username. Even in the other user's                     homepage, the username of the new user will be reflected.
 
-1. Remove Slot:
+4. Remove Slot:
 
-- In the home page, click the &quot;Remove Slot&quot; hyperlink. This will redirect the user to a page to accept the details of the booking to be removed.
-- Choose the booking to be removed. Click on remove slot.
-- This will redirect the user to the confirmation webpage of the deleted slot.
+    - In the home page, click the &quot;Remove Slot&quot; hyperlink. This will           redirect the user to a page to accept the details of the booking to be             removed.
+    - Choose the booking to be removed. Click on remove slot.
+    - This will redirect the user to the confirmation webpage of the deleted slot.
 
-1. Change Password:
+5. Change Password:
 
-- From the dropdown menu next to the username, choose change password.
-- Fill in the old password and the new password. The new password must also satisfy the constraints mentioned.
-- Click on &quot;Save Changes&quot; to successfully save change your password. The user will be redirected to the home page.
+    - From the dropdown menu next to the username, choose change password.
+    - Fill in the old password and the new password. The new password must also         satisfy the constraints mentioned.
+    - Click on "Save Changes" to successfully save change your password.       The       user will be redirected to the home page.
 
-1. Logout:
+5. Logout:
 
-- From the dropdown menu next to the username, choose &quot;Logout&quot;.
-- The user will be redirected to the login page.
+    - From the dropdown menu next to the username, choose &quot;Logout&quot;.
+    - The user will be redirected to the login page.
 
 User Testing:
 
@@ -151,11 +126,6 @@ We asked a few of family members to try our website and share their experience a
 
 All our users found navigating the website convenient. They were comfortable with the User Interface almost immediately. Even though the booking slot part of the system was okay, the functionality of other users joining a booking could be improved. With additions such as allowing the user to know that they are joining others before they book the slot or mentioning then number of people required while joining the booking. Another improvement they suggested was that when a user removes a booked slot it should also be removed from their google calendar.
 
-Collaboration:
-
-We are using GitHub for version control and collaboration. We made a private repository &quot;nucleus\_orbital&quot; on which we are storing the working versions.
-
-![](RackMultipart20200728-4-1nu4w75_html_bb4bdc4426fabfd3.png)
 
 Project Summary:
 
